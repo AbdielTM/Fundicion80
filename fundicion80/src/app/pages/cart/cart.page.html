@@ -1,0 +1,70 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/catalog" text="" color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="font-weight: 700;">Mi Carrito</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" class="ion-padding">
+  @if (items.length > 0) {
+    <ion-list lines="none" style="background: transparent;">
+      @for (item of items; track $index) {
+        <ion-item class="cart-item">
+          <ion-thumbnail slot="start">
+            <img [src]="item.producto.imagenUrl" [alt]="item.producto.nombre" />
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ item.producto.nombre }}</h2>
+            <p>Talla: <strong>{{ item.talla }}</strong> | Color: <strong>{{ item.color }}</strong></p>
+            <div class="price-row">
+              <span class="quantity">Cant: {{ item.cantidad }}</span>
+              <span class="subtotal">S/ {{ item.subtotal.toFixed(2) }}</span>
+            </div>
+          </ion-label>
+          
+          <ion-button slot="end" fill="clear" color="danger" (click)="removerItem($index)">
+            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+      }
+    </ion-list>
+
+    <div class="summary-card">
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span>S/ {{ total.toFixed(2) }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Envío</span>
+        <span style="color: var(--ion-color-success); font-weight: 600;">Gratis</span>
+      </div>
+      <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 12px 0;" />
+      <div class="summary-row" style="font-size: 1.15rem; font-weight: 800; color: #000;">
+        <span>Total a pagar</span>
+        <span>S/ {{ total.toFixed(2) }}</span>
+      </div>
+    </div>
+
+  } @else {
+    <div class="empty-cart ion-text-center" style="padding: 60px 20px;">
+      <ion-icon name="cart-outline" style="font-size: 96px; color: #a2a2a2;"></ion-icon>
+      <h3 style="font-weight: 700;">Tu carrito está vacío</h3>
+      <p style="color: #666;">Explora nuestro catálogo y elige tus sandalias favoritas.</p>
+      <ion-button expand="block" shape="round" color="dark" class="ion-margin-top" routerLink="/catalog">
+        Ver catálogo
+      </ion-button>
+    </div>
+  }
+</ion-content>
+
+@if (items.length > 0) {
+  <ion-footer class="ion-no-border">
+    <ion-toolbar color="light" class="ion-padding-horizontal ion-padding-bottom">
+      <ion-button expand="block" shape="round" style="--background: #000; height: 54px; font-weight: 700;" (click)="procesarCompra()">
+        Confirmar Compra
+      </ion-button>
+    </ion-toolbar>
+  </ion-footer>
+}

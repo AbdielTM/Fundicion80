@@ -1,0 +1,44 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+    <ion-title style="font-weight: 800; letter-spacing: -0.5px;">fundicion80</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="irAlCarrito()">
+        <ion-icon name="cart-outline" slot="icon-only" color="dark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" class="ion-padding-horizontal">
+  
+  <div class="catalog-header">
+    <h2>Nuestra Colección</h2>
+    <p>Modelos exclusivos diseñados para ti</p>
+  </div>
+
+  <ion-grid fixed>
+    <ion-row>
+      @if (productos.length === 0) {
+        <ion-col size="12" class="ion-text-center ion-padding-top">
+          <ion-spinner color="primary"></ion-spinner>
+          <p style="color: var(--ion-color-medium);">Buscando sandalias en la base de datos...</p>
+        </ion-col>
+      } @else {
+        @for (producto of productos; track producto.id) {
+          <ion-col size="6" size-md="4" size-lg="3">
+            <ion-card class="product-card" (click)="verProducto(producto.id)">
+              <div class="img-container">
+                <img [src]="producto.imagenUrl || 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=500'" [alt]="producto.nombre" />
+              </div>
+              <ion-card-header>
+                <ion-card-subtitle>S/ {{ producto.precio }}</ion-card-subtitle>
+                <ion-card-title>{{ producto.nombre || 'Sandalia sin nombre' }}</ion-card-title>
+              </ion-card-header>
+            </ion-card>
+          </ion-col>
+        }
+      }
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

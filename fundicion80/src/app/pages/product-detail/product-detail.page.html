@@ -1,0 +1,68 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/catalog" text="" color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/cart">
+        <ion-icon name="cart-outline" slot="icon-only" color="dark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  @if (producto) {
+    <div class="image-container">
+      <img [src]="producto.imagenUrl" [alt]="producto.nombre" />
+    </div>
+
+    <div class="info-container">
+      <div class="header-row">
+        <h1 class="product-title">{{ producto.nombre }}</h1>
+        <h2 class="product-price">S/ {{ producto.precio.toFixed(2) }}</h2>
+      </div>
+      
+      <p class="product-description">{{ producto.descripcion }}</p>
+
+      <div class="selection-group">
+        <h3>Selecciona un Color</h3>
+        <ion-radio-group [(ngModel)]="colorSeleccionado">
+          <div class="options-grid">
+            @for (color of producto.colores; track color) {
+              <ion-item lines="none" class="option-item">
+                <ion-radio [value]="color" justify="space-between">{{ color }}</ion-radio>
+              </ion-item>
+            }
+          </div>
+        </ion-radio-group>
+      </div>
+
+      <div class="selection-group">
+        <h3>Selecciona tu Talla</h3>
+        <ion-radio-group [(ngModel)]="tallaSeleccionada">
+          <div class="options-grid sizes">
+            @for (talla of producto.tallas; track talla) {
+              <ion-item lines="none" class="option-item">
+                <ion-radio [value]="talla" justify="space-between">{{ talla }}</ion-radio>
+              </ion-item>
+            }
+          </div>
+        </ion-radio-group>
+      </div>
+    </div>
+  }
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar color="light" class="ion-padding-horizontal ion-padding-bottom">
+    <ion-button 
+      expand="block" 
+      shape="round" 
+      class="add-btn" 
+      (click)="agregarAlCarrito()" 
+      [disabled]="!tallaSeleccionada || !colorSeleccionado">
+      Añadir al Carrito
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,55 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/catalog" text="" color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="font-weight: 700;">Mis Compras</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" class="ion-padding">
+
+  @if (cargando) {
+    <div class="loading-state ion-text-center ion-padding-top">
+      <ion-spinner color="primary"></ion-spinner>
+      <p style="color: var(--ion-color-medium);">Cargando tu historial...</p>
+    </div>
+  } @else if (compras.length === 0) {
+    <div class="empty-state ion-text-center" style="padding: 60px 20px;">
+      <ion-icon name="bag-check-outline" style="font-size: 80px; color: #a2a2a2;"></ion-icon>
+      <h3 style="font-weight: 700; color: var(--ion-color-dark);">Aún no tienes compras</h3>
+      <p style="color: var(--ion-color-step-600);">Tus pedidos confirmados aparecerán aquí.</p>
+    </div>
+  } @else {
+    @for (venta of compras; track venta.id) {
+      <ion-card class="order-card">
+        <ion-card-header>
+          <div class="header-row">
+            <ion-card-subtitle>{{ venta.fecha | date:'medium' }}</ion-card-subtitle>
+            <ion-badge color="success">{{ venta.estado }}</ion-badge>
+          </div>
+          <ion-card-title>Total: S/ {{ venta.total.toFixed(2) }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <hr class="divider" />
+          <ion-list lines="none">
+            @for (item of venta.productos; track $index) {
+              <ion-item class="product-item">
+                <ion-thumbnail slot="start">
+                  <img [src]="item.producto.imagenUrl" [alt]="item.producto.nombre">
+                </ion-thumbnail>
+                <ion-label>
+                  <h2>{{ item.producto.nombre }}</h2>
+                  <p>Color: {{ item.color }} | Talla: {{ item.talla }}</p>
+                  <p class="quantity">Cant: {{ item.cantidad }}</p>
+                </ion-label>
+              </ion-item>
+            }
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    }
+  }
+
+</ion-content>

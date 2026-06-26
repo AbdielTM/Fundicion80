@@ -1,0 +1,29 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+    <ion-title style="font-weight: 700;">Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" class="ion-padding">
+  <div class="avatar-container ion-text-center ion-padding-vertical">
+    <ion-icon name="person-circle-outline" style="font-size: 100px; color: var(--ion-color-medium);"></ion-icon>
+    <h2 style="font-weight: 700;">Usuario fundicion80</h2>
+  </div>
+
+  <ion-list lines="full" class="ion-margin-top">
+    <ion-item>
+      <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        <h3>Correo electrónico</h3>
+        <p>{{ usuarioCorreo }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div class="ion-padding-top">
+    <ion-button expand="block" fill="outline" color="danger" (click)="cerrarSesion()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      Cerrar Sesión
+    </ion-button>
+  </div>
+</ion-content>
